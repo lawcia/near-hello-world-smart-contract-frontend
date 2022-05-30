@@ -1,0 +1,39 @@
+.home-paper {
+  width: 100%;
+  max-width: 1100px;
+  margin: 8px auto auto;
+  padding: 24px;
+}
+
+.login-paper {
+  padding: 24px;
+}
+
+.home-form {
+  padding: 24px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-button {
+  width: 190px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.home-greeting {
+  padding: 24px 0px;
+  min-height: 1rem;
+}
+
+@media (min-width: 600px) {
+  .home-button {
+    margin-left: 24px;
+    margin-top: 0px;
+  }
+
+  .home-form {
+    flex-direction: row;
+  }
+}
