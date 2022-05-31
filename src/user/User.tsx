@@ -17,9 +17,9 @@ const User: FC = () => {
 
   return (
     <div className="user">
-      <Typography variant="caption">{getUser()}</Typography>
-      <Tooltip className="home-logout" title="Logout">
-        <IconButton onClick={logout}>
+      <Typography className="user-text" variant="caption">{getUser()}</Typography>
+      <Tooltip title="Logout">
+        <IconButton className="user-button" onClick={logout}>
           <AccountCircle />
         </IconButton>
       </Tooltip>

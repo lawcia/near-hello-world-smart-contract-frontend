@@ -1,4 +1,11 @@
 .user {
   margin: 20px 24px 12px 12px;
   align-self: flex-end;
+  background-color: #1876d1;
+  border-radius: 24px;
+  padding: 0px 0px 0px 12px;
+}
+
+.user-text, button.user-button  {
+  color: #ffffff;
 }
