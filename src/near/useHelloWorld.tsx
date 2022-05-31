@@ -20,7 +20,7 @@ const useHelloWorld = () => {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [contract, setContract] = useState<HelloWorldContract>();
+  const [contractBackup, setContractBackup] = useState<HelloWorldContract>();
   const context = useContext(NearContext);
 
   useEffect(() => {
@@ -31,8 +31,9 @@ const useHelloWorld = () => {
   }, [context]);
 
   const logout = () => {
-    if (context === null) return;
-    context.walletConnection.signOut();
+    if (context !== null) {
+      context.walletConnection.signOut();
+    }
     window.location.replace(window.location.origin + window.location.pathname);
   };
 
@@ -43,51 +44,50 @@ const useHelloWorld = () => {
       return;
     }
     logger("Logging in user");
-    context.walletConnection?.requestSignIn(HELLO_WORLD_CONTRACT);
-    (async () => {
-      try {
-        await initContract({ skipLogin: true });
-        setIsError(false);
-      } catch {
-        setIsError(true);
-      }
-    })();
+    context.walletConnection.requestSignIn(HELLO_WORLD_CONTRACT);
+    try {
+      initContract();
+      setIsError(false);
+    } catch {
+      setIsError(true);
+    }
   };
 
-  const initContract = async (options = { skipLogin: false }) => {
-    if (context === null && options.skipLogin) {
-      logger("User must login");
-      setIsLoading(false);
-      return;
-    } else if (context === null) {
-      login();
-      return;
+  const initContract = () => {
+    if (context === null) {
+      throw new Error("NEAR context is null");
     }
 
-    if (contract === undefined) {
-      const localContract = (await new Contract(
+    let contract: HelloWorldContract;
+
+    if (contractBackup === undefined) {
+      contract = new Contract(
         context.walletConnection.account(),
         HELLO_WORLD_CONTRACT,
         {
           viewMethods: [],
           changeMethods: ["set_name", "delete", "get_name", "greet"],
         }
-      )) as unknown as HelloWorldContract;
+      ) as HelloWorldContract;
 
-      setContract(localContract);
+      setContractBackup(contract);
+    } else {
+      contract = contractBackup;
     }
+    return contract;
   };
 
-  const getGreeting = async (name: string) => {
+  const getGreeting = (name: string) => {
     logger("Get greeting");
     setIsLoading(true);
     setIsError(false);
 
-    
-    await initContract();
-    
+    const contract = initContract();
+
     logger("Invoking contract");
-    contract?.set_name({ name })
+
+    contract
+      .set_name({ name })
       .then(() => {
         logger("Setting name");
         return contract.greet();

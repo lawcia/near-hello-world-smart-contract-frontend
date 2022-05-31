@@ -1,0 +1,8 @@
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.progress {
+  margin: 0px 0px 0px 8px;
+}

@@ -13,6 +13,7 @@ import {
 import { useHelloWorld } from "../near/useHelloWorld";
 
 import "./Home.css";
+import { Greeting } from "../greeting/Greeting";
 
 const Home = () => {
   const { greeting, getGreeting, isError, isLoading } = useHelloWorld();
@@ -48,13 +49,7 @@ const Home = () => {
         </div>
       </form>
       <div className="home-greeting">
-        {isLoading && <Typography variant="body1">Loading...</Typography>}
-        {greeting && <Typography variant="body1">👋 {greeting}</Typography>}
-        {isError && (
-          <Typography color="red" variant="body1">
-            Something went wrong!
-          </Typography>
-        )}
+        <Greeting isLoading={isLoading} isError={isError} greeting={greeting} />
       </div>
     </Paper>
   );

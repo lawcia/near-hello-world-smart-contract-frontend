@@ -1,4 +1,16 @@
 .app {
   display: flex;
   flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+}
+
+.app-background {
+  background-color: #73a16b;
+  background-image: url("trees.png");
+  min-height: 68vh;
+  min-width: 100vw;
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
 }

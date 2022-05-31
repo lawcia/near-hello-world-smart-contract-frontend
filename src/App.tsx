@@ -18,6 +18,7 @@ function App() {
       ) : (
         <Login />
       )}
+      <div className="app-background" />
     </div>
   );
 }
